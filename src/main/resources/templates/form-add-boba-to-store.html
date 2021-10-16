@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+ 
+<head>
+    <title>Emsidi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+ 
+<body>
+<nav th:replace="fragments/fragment :: navbar('Boba')"></nav>
+<div th:if="*{boba_tea.size() != 0}">
+    <form th:action="@{/store/} + ${id} + @{/assign-boba/}" th:object="${storeBobaRelation}" method="POST">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Size</th>
+                    <th>Ice</th>
+                    <th>Sugar</th>
+                    <th>Topping</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "boba, iterationStatus : ${boba_tea}"
+                th:style = "${iterationStatus.even} ? 'background: #FFF;'">
+                <td>
+                    <input class="form-check-input" type="checkbox" name = "boba"
+                    th:value="${boba.id}"
+                    id="fieldCheckDefault">
+                </td>
+                <td th:text="${boba.namaBoba}"></td>
+                <td th:text="'Rp' + ${boba.hargaBoba}"></td>
+                <td th:if="${boba.ukuranBoba} == 0">S</td>
+                <td th:if="${boba.ukuranBoba} == 1">M</td>
+                <td th:if="${boba.ukuranBoba} == 2">L</td>
+                <td th:if="${boba.esBoba} == 0">S</td>
+                <td th:if="${boba.esBoba} == 1">M</td>
+                <td th:if="${boba.esBoba} == 2">L</td>
+                <td th:if="${boba.gulaBoba} == 0">S</td>
+                <td th:if="${boba.gulaBoba} == 1">M</td>
+                <td th:if="${boba.gulaBoba} == 2">L</td>
+                <td th:if= "${boba.topping} == null" th:text="'No Topping'"></td>
+                <td th:if= "${boba.topping} != null" th:text="${boba.topping.namaTopping}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button th:href="@{/store/} + ${id} + @{/assign-boba/}">Submit</button>
+    </form>
+</div>
+<a th:href="@{/}" class="mx-2 btn btn-dark">Kembali</a>
+<div th:unless="*{boba_tea.size() != 0}">
+    <h2 th:text="'Tidak ada Boba?!?!?!?'"></h2>
+</div>
+ 
+</body>
+ 
+</html>

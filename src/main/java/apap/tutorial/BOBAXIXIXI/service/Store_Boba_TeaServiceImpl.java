@@ -41,27 +41,33 @@ public class Store_Boba_TeaServiceImpl implements Store_Boba_TeaService{
     }
 
     @Override
-    public String addProductionCode(Store_Boba_TeaModel storeBobaRelation){
-        Long codeFromStoreAsli = storeBobaRelation.getStore().getId();
+    public String addProductionCode(Boba_TeaModel boba, StoreModel store){
+        Long codeFromStoreAsli = store.getId();
         String codeFromStore = String.format("%03d", codeFromStoreAsli);
         String tengah;
-        if(storeBobaRelation.getBoba_tea().getTopping() != null){
+        if(boba.getTopping() != null){
             tengah = "1";
         }
         else{
             tengah = "0";
         }
-        Long codeFromBobaAsli = storeBobaRelation.getBoba_tea().getId();
+        Long codeFromBobaAsli = boba.getId();
         String codeFromBoba = String.format("%03d", codeFromBobaAsli);
         String production = "PC" + codeFromStore + tengah + codeFromBoba;
         return production;
     }
     @Override
-    public void addStoreBobaTea(Long id, Store_Boba_TeaModel storeBobaRelation, StoreModel store, Boba_TeaModel boba_Tea){
-        storeBobaRelation.setId(id);
+    public void addStoreBobaTea(StoreModel store, Boba_TeaModel boba_Tea){
+        Store_Boba_TeaModel storeBobaRelation = new Store_Boba_TeaModel();
         storeBobaRelation.setStore(store);
         storeBobaRelation.setBoba_tea(boba_Tea);
+        storeBobaRelation.setKodeProduksi(addProductionCode(boba_Tea, store));
         store_Boba_TeaDb.save(storeBobaRelation);
+    }
+
+    @Override
+    public List<Store_Boba_TeaModel> getStoreBobalist(){
+        return store_Boba_TeaDb.findAll();
     }
 
 

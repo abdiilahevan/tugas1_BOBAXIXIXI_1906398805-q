@@ -65,7 +65,7 @@ public class StoreController {
         StoreModel store = storeService.getStoreById(id);
         model.addAttribute("store", store);
         model.addAttribute("manager", store.getManager().getNamaManager());
-
+        model.addAttribute("listBoba", store.getStoreBobaRelation());
         return "view-store";
     }
 
@@ -106,9 +106,12 @@ public class StoreController {
     ) {
         StoreModel store = storeService.getStoreById(id);
         model.addAttribute("name", store.getNamaToko());
-        if(storeService.jamWaktuTutup(store)){
-            storeService.deleteStore(store);
-            return "delete-store";
+        if(store.getStoreBobaRelation().isEmpty()){
+            if(storeService.jamWaktuTutup(store)){
+                storeService.deleteStore(store);
+                return "delete-store";
+            }
+            return "error-page";
         }
         return "error-page";
     }
