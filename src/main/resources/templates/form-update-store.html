@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Emsidi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<body>
+<nav th:replace="fragments/fragment :: navbar('Store')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Store</h2>
+                <br>
+                <form th:action="@{/store/update}" th:object="${store}" method="POST">
+                    <input type="hidden" th:field="*{id}" />
+                    Store Name : <br>
+                    <input required class="form-control" type="text" name="namaToko" th:value="*{namaToko}" th:placeholder = "*{namaToko}"/>
+                    <br><br>
+ 
+                    Manager: <br>
+                    <select name = "manager" class="form-control">
+                        <option th:each = "manager: ${listManager}" th:value = "${manager.id}" th:text = "${manager.namaManager}" th:selected="${manager.id == store.manager}"/>
+                    </select>
+                    <br><br>
+
+                    Address : <br>
+                    <input required class="form-control" type="text" name="alamatToko" th:value="*{alamatToko}" th:placeholder = "*{alamatToko}"/>
+                    <br><br>
+ 
+                    Waktu Buka : <br>
+                    <input required class="form-control" type="time" name="waktuBuka" th:value="*{waktuBuka}" th:placeholder = "*{waktuBuka}"/>
+                    <br><br>
+ 
+                    Waktu Tutup : <br>
+                    <input required class="form-control" type="time" name="waktuTutup" th:value="*{waktuTutup}" th:placeholder = "*{waktuTutup}"/>
+                    <br><br>
+                <button class="btn btn-primary" name="submit">Submit</button>
+                <a class="btn btn-primary" href="/store">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+ 
+<head>
+    <title>Emsidi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+ 
+<body>
+<nav th:replace="fragments/fragment :: navbar('Store')"></nav>
+<div th:if="*{listStore.size() != 0}">
+    <form th:action="@{/store/delete/}" method="POST">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Store Code</th>
+                    <th>Name</th>
+                    <th>Adress</th>
+                    <th>Operational Hour</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "store, iterationStatus : ${listStore}"
+                th:style = "${iterationStatus.even} ? 'background: #FFF;'">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${store.noTeleponToko}"></td>
+                <td th:text="${store.namaToko}"></td>
+                <td th:text="${store.alamatToko}"></td>
+                <td th:text="${store.waktuBuka} + ' - ' + ${store.waktuTutup}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/store/view/} + ${store.id}">Lihat Detail</a>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{/store/update/} + ${store.id}">Update</a>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{/store/delete/} + ${store.id}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<a th:href="@{/store/add}" class="mx-2 btn btn-outline-dark">Add Store</a>
+<a th:href="@{/}" class="mx-2 btn btn-dark">Home</a>
+<div th:unless="*{listStore.size() != 0}">
+    <h2 th:text="'No Store Existed Right Now'"></h2>
+</div>
+ 
+</body>
+ 
+</html>
