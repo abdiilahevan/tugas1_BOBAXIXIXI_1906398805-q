@@ -25,14 +25,12 @@ public class Store_Boba_TeaModel {
 
     //ke boba
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Size(max = 20)
     @JoinColumn(name = "id_bobaTea", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Boba_TeaModel boba_tea;
 
     //ke store
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Size(max = 20)
     @JoinColumn(name = "id_store", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private StoreModel store;

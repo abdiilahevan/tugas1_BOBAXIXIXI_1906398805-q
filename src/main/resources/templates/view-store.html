@@ -24,8 +24,30 @@
             </div>
         </div>
     </div>
+    <a th:href="@{/store/} + ${store.id} + @{/assign-boba/}" class="mx-2 btn btn-dark">add boba</a>
     <a th:href="@{/store}" class="mx-2 btn btn-dark">Go Back</a>
 <div>
+<div th:if="*{listBoba.size() != 0}">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Topping</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "boba, iterationStatus : ${listBoba}"
+                th:style = "${iterationStatus.even} ? 'font-weight:bold;'">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${boba.boba_tea.namaBoba}"></td>
+                <td th:text="${boba.boba_tea.topping.namaTopping}"></td>
+                <td th:text="'Rp'+${boba.boba_tea.hargaBoba}"></td>
+            </tr>
+            </tbody>
+        </table>
+</div>
 
 
 </body>
